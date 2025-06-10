@@ -1,23 +1,10 @@
-import tkinter as tk
-from tkinter import font
+from flask import Flask, jsonify
 
-# Tạo cửa sổ chính
-window = tk.Tk()
-window.title("Tên của tôi")
-window.geometry("400x200")  # Kích thước cửa sổ
-window.configure(bg="#40E0D0")  # Background màu xanh ngọc (turquoise)
+app = Flask(__name__)
 
-# Tạo font chữ đẹp
-custom_font = font.Font(family="Helvetica", size=24, weight="bold")
+@app.route('/')
+def home():
+    return jsonify({"name": "Võ Văn Thần Thái"})
 
-# Tạo nhãn (label) để hiển thị tên
-label = tk.Label(window, 
-                 text="Võ Văn Thần Thái", 
-                 font=custom_font, 
-                 fg="white",  # Màu chữ trắng
-                 bg="#40E0D0",  # Background khớp với cửa sổ
-                 pady=50)  # Padding dọc để căn giữa
-label.pack(expand=True)  # Căn giữa nhãn trong cửa sổ
-
-# Chạy ứng dụng
-window.mainloop()
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
