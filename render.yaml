@@ -1,4 +1,3 @@
-# render.yaml
 services:
   - type: web
     name: flask-app
@@ -6,10 +5,12 @@ services:
     region: oregon # Chọn vùng (có thể thay bằng singapore, frankfurt, v.v.)
     plan: free     # Kế hoạch miễn phí (có thể nâng cấp lên paid nếu cần)
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --worker-tmp-dir /dev/shm app:app
+    startCommand: gunicorn --worker-tmp-dir /dev/shm app:app --bind 0.0.0.0:$PORT
     envVars:
       - key: FLASK_ENV
         value: production
       - key: PYTHON_VERSION
-        value: 3.11.0 # Phiên bản Python, điều chỉnh theo nhu cầu
+        value: 3.11 # Sử dụng phiên bản chính thay vì patch version
+      - key: PORT
+        value: 10000 # Render sẽ ghi đè giá trị này bằng biến $PORT, nhưng khai báo để tránh lỗi
     autoDeploy: true # Tự động triển khai khi có thay đổi mã nguồn
